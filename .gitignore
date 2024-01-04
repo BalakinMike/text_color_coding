@@ -1,0 +1,5 @@
+**/input
+**/output
+**/temp
+*.ipynb
+all_elements.py

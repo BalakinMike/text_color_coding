@@ -19,6 +19,14 @@ def json_to_dict(name):
         color_code_dict = json.load(f)
    return color_code_dict
 
+def text_from_file(file_path):
+    '''Reading txt file, which choosing for coding''' 
+    try:
+        with open (file_path) as fp:
+            text = fp.read()
+        return text
+    except UnicodeDecodeError:
+        return 'ALERT! INCORRECT FILE FORMAT! CHOOSE ANOTHER FILE!'
 
 rightclick=['&Edit', ['&Copy','&Paste']]
 menu_def = [['&File', ['&New', '&Open', '&Save', 'E&xit', ]], ['Edit', ['Copy', 'Paste'], ],  ['Help', 'About...'], ]
@@ -56,16 +64,26 @@ while True:
         sg.popup('Description', DESCRIPTION)
     if event == 'Paste': #Input text with help of right click mouse
         input.Widget.insert(sg.tk.INSERT, window.TKroot.clipboard_get())
+    if event == 'Open': #chossing txt file for coding 
+        try:
+            file_path = sg.popup_get_file('Select a file',  title="File selector")
+            text_from_file = text_from_file(file_path)
+            if text_from_file != 'ALERT! INCORRECT FILE FORMAT! CHOOSE ANOTHER FILE!':
+                window['-IN-'].update(text_from_file)
+            else:
+                window['-OUT-'].update(text_from_file)
+        except TypeError:
+            pass
     if event == '-TRANSFORM-': #Transforming text to color line
         txt = window['-IN-'].get()
         j = 0 #lines counter
         for i in range(len(txt)):
-            hex_code_sym = f'{hex(ord(txt[i]))[2:]}'
-            sym_color_code = color_code_dict[hex_code_sym]
             try:
+                hex_code_sym = f'{hex(ord(txt[i]))[2:]}'
+                sym_color_code = color_code_dict[hex_code_sym]
                 h=10*((10*i)//SIZE_W) #transition counter to new line Y
-                rectangle = graph.draw_rectangle((10*j,(SIZE_H-h)), (10*j+10,(SIZE_H-h)-10), line_color=f'{sym_color_code}')
-                graph.TKCanvas.itemconfig(rectangle, fill= f'{sym_color_code}')
+                rectangle = graph.draw_rectangle((10*j,(SIZE_H-h)), (10*j+10,(SIZE_H-h)-10), line_color = sym_color_code)
+                graph.TKCanvas.itemconfig(rectangle, fill = sym_color_code)
                 output_code.append(sym_color_code)
                 j +=1
                 if j == (SIZE_W/10): #transition counter to new line X

@@ -6,7 +6,7 @@ NAME_SIZE = 23
 SIZE_W = 600 # work window size (width)
 SIZE_H = 100
 DESCRIPTION = '''This app lets translate text to color code (array of color rectangle).
-1. First of all You have to choose coding dictionary, clicking button 'Browse'. 
+1. First of all, You have to choose coding dictionary, clicking button 'Browse'. 
 2. After that, you have to input (or Paste) text in special window and click 'Coding'.
 3. In case in your text will find non standard symbol you will get special message in lower window.
 4. For saving getting color code choose 'Save' in window menu. Code will be save currently folder in file 'color_output_code.txt'.

@@ -7,7 +7,7 @@ SIZE_W = 600 # work window size (width)
 SIZE_H = 100
 DESCRIPTION = '''This app lets translate text to color code (array of color rectangle).
 1. First of all, You have to choose coding dictionary, clicking button 'Browse'. 
-2. After that, you have to input (or Paste) text in special window and click 'Coding'.
+2. After that, you have to input (or Paste) text in special window and click 'Coding'. Also, you can use window menu and open any txt file.
 3. In case in your text will find non standard symbol you will get special message in lower window.
 4. For saving getting color code choose 'Save' in window menu. Code will be save currently folder in file 'color_output_code.txt'.
 
@@ -29,7 +29,7 @@ def text_from_file(file_path):
         return 'ALERT! INCORRECT FILE FORMAT! CHOOSE ANOTHER FILE!'
 
 rightclick=['&Edit', ['&Copy','&Paste']]
-menu_def = [['&File', ['&New', '&Open', '&Save', 'E&xit', ]], ['Edit', ['Copy', 'Paste'], ],  ['Help', 'About...'], ]
+menu_def = [['&File', ['&Open', '&Save', 'E&xit', ]], ['Edit', ['Copy', 'Paste'], ],  ['Help', 'About...'], ]
 
 # ----- Full layout -----
 layout = [[
@@ -44,7 +44,7 @@ layout = [[
                     graph_top_right=(SIZE_W,SIZE_H), background_color='#ffffff', 
                     enable_events=True, key = 'graph')],
           [sg.Text("Window for providing technical information:")],  
-          [sg.Multiline("", key='-OUT-', expand_x=True, expand_y=True)],
+          [sg.Multiline("", key='-OUT-', expand_x=True, expand_y=True, text_color='red',font=("BoldArial", 14),horizontal_scroll=True)],
           [sg.Button('Coding', key='-TRANSFORM-', expand_x=True)],
 ]
 
@@ -90,6 +90,8 @@ while True:
                     j = 0
             except KeyError:
                 window['-OUT-'].update(f'Key {hex_code_sym} not found in color_code_dict')
+            except NameError:
+                window['-OUT-'].update('Choose color_code_dict')
     if event == 'Save':  #saving finally color code in file      
         with open('color_output_code.txt', 'w') as cd: #saving result color cod in txt file
             cd.write('\n'.join(output_code))            

@@ -8,5 +8,6 @@ Project "Text_color" contains app to translate text into color code.
     <li>Added possability to enter text from clipboard</li>
     <li>Added possibility to save getting color code to text file</li>
     <li>Added description for app</li>
+    <li>Have realised work of menu "Open". You can choose any txt file to translating it into color code.</li>
 </ol>  
 
